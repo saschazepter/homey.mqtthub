@@ -115,6 +115,9 @@
   },
   "4.5.4": {
     "en": "HA device class for CO/CO2 sensors changed (carbon_monoxide, carbon_dioxide). HA entity state set to 'unavailable' if Homey value is undefined."
+  },
+  "4.5.5": {
+    "en": "Parsing onoff capabilities including sub capabilities."
   }
 
 }

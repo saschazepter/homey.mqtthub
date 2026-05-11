@@ -547,7 +547,7 @@ class MQTTDevice extends Homey.Device {
         }
 
         const topic = config.setTopic;
-        let payload = capabilityId === 'onoff'
+        let payload = capabilityId.startsWith('onoff')
             ? (config.outputTemplate ? value : formatOnOff(value, this.onOffValues))
             : formatValue(value, CAPABILITIES[capabilityId], this.percentageScale);
 

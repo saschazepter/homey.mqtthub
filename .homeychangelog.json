@@ -118,6 +118,9 @@
   },
   "4.5.5": {
     "en": "Parsing onoff capabilities including sub capabilities."
+  },
+  "4.6.0": {
+    "en": "Added lawn mower to HA discovery."
   }
 
 }

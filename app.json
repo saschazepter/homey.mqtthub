@@ -1,6 +1,6 @@
 {
   "id": "org.mqtt.hub",
-  "version": "4.5.5",
+  "version": "4.6.0",
   "compatibility": ">=12.4.5",
   "sdk": 3,
   "brandColor": "#103b7a",
@@ -288,7 +288,22 @@
               },
               "value": "",
               "hint": {
-                "en": "WARNING: Messing up the topic config will break the device! ... Value template: Use MathJS expression, JSON path or JS function ... 1) MathJS: value * 100 ... 2) JSON path: object/subobject/field ... 3) JS function: (topic) => { return topic.value * 100 }"
+                "en": "WARNING: Messing up the topic config will break the device! ... Value template: Use MathJS expression, JSON path or JS function ... 1) MathJS: value * 100 ... 2) JSON path: object/subobject/field ... 3) JS function: (topic) => { return topic.value * 100 } ... Retain: add \"retain\": false to a capability to publish it without the retain flag."
+              }
+            },
+            {
+              "id": "retain",
+              "type": "checkbox",
+              "label": {
+                "en": "Retain published messages",
+                "nl": "Berichten retained publiceren",
+                "de": "Nachrichten mit Retain veröffentlichen"
+              },
+              "value": true,
+              "hint": {
+                "en": "Publish outgoing messages with the MQTT retain flag. Retained messages are stored by the broker and re-delivered whenever the target device reconnects. Keep this enabled to publish state; disable it when the topics are command topics, otherwise the last command is repeated on every reconnect of the receiving device.",
+                "nl": "Publiceer uitgaande berichten met de MQTT retain-vlag. Retained berichten worden door de broker bewaard en opnieuw afgeleverd zodra het doelapparaat herverbindt. Laat dit aan staan voor state; zet het uit als de topics commandotopics zijn, anders wordt het laatste commando bij elke reconnect van het ontvangende apparaat herhaald.",
+                "de": "Ausgehende Nachrichten mit dem MQTT-Retain-Flag veröffentlichen. Retained-Nachrichten werden vom Broker gespeichert und erneut zugestellt, sobald sich das Zielgerät neu verbindet. Für Statuswerte aktiviert lassen; bei Befehls-Topics deaktivieren, sonst wird der letzte Befehl bei jeder Neuverbindung des Empfängers wiederholt."
               }
             }
           ]

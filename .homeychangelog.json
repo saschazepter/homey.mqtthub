@@ -118,6 +118,9 @@
   },
   "4.5.5": {
     "en": "Parsing onoff capabilities including sub capabilities."
+  },
+  "4.6.0": {
+    "en": "Added a device setting to control the MQTT retain flag for published messages. Disable it when the mapped topics are command topics."
   }
 
 }

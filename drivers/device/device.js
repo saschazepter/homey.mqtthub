@@ -86,6 +86,7 @@ class MQTTDevice extends Homey.Device {
 
         this.percentageScale = settings.percentageScale || 'int';
         this.onOffValues = settings.onOffValues || 'bool';
+        this.retain = settings.retain !== false;
 
         const capabilities = settings.topics ? JSON.parse(settings.topics) : null;
         this._capabilities = capabilities;
@@ -581,14 +582,14 @@ class MQTTDevice extends Homey.Device {
             }
         }
 
-        const retain = true;
+        const retain = config.retain !== undefined ? config.retain : this.retain !== false;
         const qos = 0;
 
         this.log('capability: ' + capabilityId);
         this.log('topic: ' + topic);
         this.log('value: ' + payload);
 
-        this.messageQueue.add(topic, payload, { qos, retain: retain !== false });
+        this.messageQueue.add(topic, payload, { qos, retain });
 
         process.nextTick(async () => {
             await delay(100);

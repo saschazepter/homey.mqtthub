@@ -264,12 +264,12 @@ class HomeAssistantDispatcher {
                 case 'sunshade':
                     this._registerCover(device).forEach(id => delete capabilities[id]);
                     break;
-                case 'heater':
-                case 'socket':
-                case 'vacuumcleaner':
                 case 'lawnmower':
                     this._registerLawnMower(device).forEach(id => delete capabilities[id]);
                     break;
+                case 'heater':
+                case 'socket':
+                case 'vacuumcleaner':
                 case 'fan':
                 case 'sensor':
                 case 'kettle':

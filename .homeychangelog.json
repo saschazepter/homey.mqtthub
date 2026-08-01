@@ -121,6 +121,9 @@
   },
   "4.6.0": {
     "en": "Added lawn mower to HA discovery."
+  },
+  "4.6.1": {
+    "en": "Fixed lawn mower HA discovery."
   }
 
 }

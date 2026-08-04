@@ -264,6 +264,9 @@ class HomeAssistantDispatcher {
                 case 'sunshade':
                     this._registerCover(device).forEach(id => delete capabilities[id]);
                     break;
+                case 'lawnmower':
+                    this._registerLawnMower(device).forEach(id => delete capabilities[id]);
+                    break;
                 case 'heater':
                 case 'socket':
                 case 'vacuumcleaner':
@@ -291,6 +294,11 @@ class HomeAssistantDispatcher {
                         if (capabilities.hasOwnProperty('windowcoverings_state')) {
                             this._registerCover(device).forEach(id => delete capabilities[id]);
                         }
+
+                        // capture all other lawn mowers
+                        if (capabilities.hasOwnProperty('mower_state')) {
+                            this._registerLawnMower(device).forEach(id => delete capabilities[id]);
+                        }
                     }
 
                     // nothing
@@ -302,6 +310,63 @@ class HomeAssistantDispatcher {
         }
 
         return capabilities;
+    }
+
+    _registerLawnMower(device) {
+        const capabilities = device.capabilitiesObj;
+        if (!capabilities) return [];
+
+        const stateTopic = this.homieDispatcher.getTopic(device);
+        const type = 'lawn_mower';
+
+        const activityTopic = `${stateTopic}/mower-state`;
+        const commandTopic = `${stateTopic}/mower-state/set`;
+
+        const payload = {
+            name: device.name,
+            unique_id: `${device.id}_${type}`,
+
+            /*
+            * Home Assistant expects one of its supported lawn-mower
+            * activity values on this topic, for example:
+            *
+            * mowing
+            * paused
+            * docked
+            * error
+            */
+            activity_state_topic: activityTopic,
+            activity_value_template: '{{ value }}',
+
+            /*
+            * Home Assistant defines separate MQTT configuration fields
+            * for each operation. They can all use the same MQTT topic.
+            */
+            start_mowing_command_topic: commandTopic,
+            start_mowing_command_template: 'mowing',
+
+            pause_command_topic: commandTopic,
+            pause_command_template: 'paused',
+
+            dock_command_topic: commandTopic,
+            dock_command_template: 'docked',
+
+            /*
+            * The actual activity is reported, so Home Assistant does
+            * not need to assume a state immediately after a command.
+            */
+            optimistic: false
+        };
+
+        let topic = [device.name, 'config'].filter(x => x).join('/');
+        if (this.normalize) {
+            topic = normalize(topic);
+        }
+        this._registerConfig(device, type, `${this.topic}/${type}/${topic}`, payload);
+
+        return [
+            'mower_state'
+        ];
     }
 
     _registerLight(device) {

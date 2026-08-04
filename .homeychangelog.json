@@ -120,7 +120,10 @@
     "en": "Parsing onoff capabilities including sub capabilities."
   },
   "4.6.0": {
-    "en": "Added a device setting to control the MQTT retain flag for published messages. Disable it when the mapped topics are command topics."
+    "en": "Added lawn mower to HA discovery."
+  },
+  "4.6.1": {
+    "en": "Fixed lawn mower HA discovery."
   }
 
 }
